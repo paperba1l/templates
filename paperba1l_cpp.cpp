@@ -1,5 +1,6 @@
 /**
  *  @author:      paperba1l
+ *  BITS Pilani
 **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -13,7 +14,7 @@ using namespace std;
 #define all(vec) vec.begin(), vec.end()
 #define ischar(ch) (ch >= 'a' && ch <= 'z')
 #define isChar(ch) (ch >= 'A' && ch <= 'Z')
-#define fill(vec, x) memset(vec, x, sizeof(vec))
+#define mset(vec, x) memset(vec, x, sizeof(vec))
 #define boostio                       \
     ios_base::sync_with_stdio(false); \
     cin.tie(0);
@@ -25,33 +26,28 @@ using namespace std;
 
 typedef long long int ll;
 typedef unsigned long long ull;
-const long double EPS = 1e-9;
-const long double PI = 3.14159265358979;
+const long double EPS   = 1e-9;
+const long double PI    = 3.14159265358979;
 inline int gcd(int a, int b) { return (b ? gcd(b, a % b) : a); }
 inline int lcm(int a, int b) { return a / gcd(a, b) * b; }
 
 const ll mod = 1e9 + 7;
-const ll maxn = 5000;
+const ll N = 5000;
+
+//int rrr[]={2,1,-1,-2,-2,-1,1,2};int ccc[]={1,2,2,1,-1,-2,-2,-1};//Knight Direction
+//int month[]={31,28,31,30,31,30,31,31,30,31,30,31}; //month
 
 void solve() {
     
     return;
 }
-int main()
-{
+int main() {
     boostio;
     int tcs = 1;
 
     // cin>>tcs;
-    while (tcs--)
-    {
+    while (tcs--){
         solve();
     }
-
     return 0;
 }
-
-//int rrr[]={1,0,-1,0};int ccc[]={0,1,0,-1}; //4 Direction
-//int rrr[]={1,1,0,-1,-1,-1,0,1};int ccc[]={0,1,1,1,0,-1,-1,-1};//8 direction
-//int rrr[]={2,1,-1,-2,-2,-1,1,2};int ccc[]={1,2,2,1,-1,-2,-2,-1};//Knight Direction
-//int month[]={31,28,31,30,31,30,31,31,30,31,30,31}; //month
