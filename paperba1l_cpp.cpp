@@ -1,6 +1,5 @@
 /**
  *  @author:      paperba1l
- *  BITS Pilani
 **/
 #include <bits/stdc++.h>
 using namespace std;
