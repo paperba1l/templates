@@ -45,7 +45,7 @@ const ll N = 5000;
 //int rrr[]={2,1,-1,-2,-2,-1,1,2};int ccc[]={1,2,2,1,-1,-2,-2,-1};//Knight Direction
 //int month[]={31,28,31,30,31,30,31,31,30,31,30,31}; //month
 
-void solve(int t) {
+void solve(int tc) {
     int n, m;
     cin >> n >> m;
     
