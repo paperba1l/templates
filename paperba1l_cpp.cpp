@@ -22,10 +22,6 @@ using namespace std;
 #define pr2(a,b)    cout<<a<<" "<<b<<endl
 #define prY         cout<<"YES"<<endl
 #define prN         cout<<"NO"<<endl
-#define si(n)       scanf("%d",&n)
-#define sc(n)       scanf("%c",&n)
-#define sl(n)       scanf("%lld",&n)
-#define sf(n)       scanf("%lf",&n)
 #define boostio                       \
     ios_base::sync_with_stdio(false); \
     cin.tie(0);
