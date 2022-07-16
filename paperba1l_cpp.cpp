@@ -52,6 +52,11 @@ void solve(int __tc) {
         cin>>a;
     }
     
+    int ans = 0;
+    
+    
+    cout<<ans<<endl;
+    
     return;
 }
 
