@@ -10,6 +10,7 @@ using namespace std;
 #define pf          push_front
 #define mp          make_pair
 #define vi          vector<int>
+#define vl          vector<ll>
 #define pii         pair<int,int>
 #define all(v)      (v).begin(),(v).end()
 #define sortv(v)    sort(all(v))
@@ -35,11 +36,12 @@ inline string toString(ll n) {stringstream ss; ss << n;return ss.str();}
 
 const long double EPS   = 1e-9;
 const long double PI    = 3.14159265358979;
-const ll mod = 1e9 + 7;
-const ll N = 5000;
 
 //int rrr[]={2,1,-1,-2,-2,-1,1,2};int ccc[]={1,2,2,1,-1,-2,-2,-1};//Knight Direction
 //int month[]={31,28,31,30,31,30,31,31,30,31,30,31}; //month
+
+const ll mod = 1e9+7;
+const ll N = 5000;
 
 void solve(int __tc) {
     int n, m;
