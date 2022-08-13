@@ -14,7 +14,7 @@ using namespace std;
 #define pii         pair<int,int>
 #define all(v)      (v).begin(),(v).end()
 #define sortv(v)    sort(all(v))
-#define rep(i,a,b)  for(ll i=a;i<=b;i++)
+#define rep(i,a,b)  for(int i=a;i<=b;i++)
 #define mset(v, x)  memset(v,x,sizeof(vec))
 #define prec(n)     fixed<<setprecision(n)
 #define ischar(ch)  (ch>='a' && ch<='z')
