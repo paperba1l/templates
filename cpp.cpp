@@ -4,30 +4,26 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define ff          first
-#define ss          second
 #define pb          push_back
-#define pf          push_front
 #define mp          make_pair
-#define vi          vector<int>
-#define vl          vector<ll>
 #define pii         pair<int,int>
-#define all(v)      (v).begin(),(v).end()
+#define vi          vector<int>
+#define vii         vector<pii>
+#define vl          vector<ll>
+#define all(v)      ((v).begin(),(v).end())
 #define sortv(v)    sort(all(v))
 #define rep(i,a,b)  for(int i=a;i<=b;i++)
-#define mset(v, x)  memset(v,x,sizeof(vec))
+#define mset(ar,x)  memset(ar,x,sizeof(ar))
 #define prec(n)     fixed<<setprecision(n)
 #define ischar(ch)  (ch>='a' && ch<='z')
 #define isChar(ch)  (ch>='A' && ch<='Z')
-#define pr(a)       cout<<a<<endl
-#define pr2(a,b)    cout<<a<<" "<<b<<endl
-#define prY         cout<<"YES"<<endl
-#define prN         cout<<"NO"<<endl
+#define print(a)    cout<<a<<endl
+#define printt(a,b) cout<<a<<" "<<b<<endl
 #define boostio                       \
     ios_base::sync_with_stdio(false); \
     cin.tie(0);
-// Input macros
 
+// Input macros
 typedef long long int ll;
 typedef unsigned long long ull;
 
@@ -44,18 +40,20 @@ const ll mod = 1e9+7;
 const ll N = 5000;
 
 void solve(int __tc) {
-    int n, m;
-    cin >> n >> m;
+    int a, b, c, d, n, m;
     
-    int a;
+    
+    n = 1;
     rep(i, 0, n-1) {
-        cin>>a;
+        
     }
+
     
     int ans = 0;
     
     
-    cout<<ans<<endl;
+    
+    print("ans");
     
     return;
 }
@@ -65,8 +63,7 @@ int main() {
     int t = 1;
 
     // cin>>t;
-    while (t--){
-        solve(t);
-    }
+
+    while (t--){solve(t);}
     return 0;
 }
