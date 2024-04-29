@@ -6,7 +6,6 @@ using namespace std;
 
 typedef long long int ll;
 typedef unsigned long long ull;
-
 #define pb          push_back
 #define pf          push_front
 #define mp          make_pair
@@ -14,10 +13,8 @@ typedef unsigned long long ull;
 #define pll         pair<ll,ll>
 #define vi          vector<int>
 #define vvi         vector<vector<int>>
-#define vii         vector<pii>
 #define vll         vector<ll>
 #define all(v)      (v).begin(),(v).end()
-#define sortv(v)    sort(all(v));
 #define rep(i,a,b)  for(int i=a;i<b;i++)
 #define mset(ar,x)  memset(ar,x,sizeof(ar));
 #define prec(n)     fixed<<setprecision(n)
@@ -26,6 +23,7 @@ typedef unsigned long long ull;
 #define println(a)      cout<< a <<endl;
 #define println2(a,b)   cout<<a<<" "<<b<<endl;
 #define println3(a,b,c) cout<<a<<" "<<b<<" "<<c<<endl;
+
 #define boostio                       \
     ios_base::sync_with_stdio(false); \
     cin.tie(0);
@@ -64,7 +62,7 @@ struct BIT {
     }
 };
 
-class SegTree {
+class ST {
     struct data{
         ll sum , pref , suff , best ;
         data(int _val){
@@ -72,57 +70,63 @@ class SegTree {
             pref = suff = best = max(0,_val) ;
         }
     };
-    vector<data> tree ;
+    vector<int> tree ;
 
-    public :
-    SegTree(int n = 1e5){
-        tree.assign(n*4,data(0)) ;
+public :
+    ST(int n = 1e5){
+        tree.assign(n*4, 0); // change this default value
     }
 
     void currbest(){
-        cout << tree[1].best << endl ;
+        cout << tree[0] << endl ;
     }
 
-    void update(int node, int index , int st, int sp , int value){
-        if(st > index || sp < index )  return ;
-        if(st == sp){
-            tree[node] = data(value) ;
+    void build(vi &arr, int i, int l, int r){
+        if(l == r){
+            tree[i] = arr[l];
+            // tree[i] = data(arr[l]);
+            return;
         }
-        else{
-            int lft = (node << 1) ;
-            int rght = lft + 1;
-            int mid = st + ((sp-st)>>1) ;
-
-            update(lft,index,st,mid,value) ;
-            update(rght,index,mid+1,sp,value) ;
-            tree[node] = operation(tree[lft],tree[rght]) ;
-        }
+        int left = 2*i + 1, right = 2*i + 2;
+        int m = (l+r)/2;
+        build(arr, left, l, m);
+        build(arr, right, m+1, r);
+        tree[i] = (tree[left] + tree[right]);
     }
 
-    void build(const vector<int> &v , int node , int st , int sp ){
-        if(st == sp){
-            tree[node] = data(v[st]) ;
+    void update(int i, int l, int r, int idx, int val){
+        if(idx < l or idx > r)  return;
+        if(l == r){
+            // tree[i] = data(val) ;
+            tree[i] = val;
+            return;
         }
-        else{
-            int lft = (node << 1) ;
-            int rght = lft + 1;
-            int mid = st + ((sp-st)>>1) ;
-
-            build(v,lft,st,mid) ;
-            build(v,rght,mid+1,sp) ;
-            tree[node] = operation(tree[lft],tree[rght]) ;
-        }
+        int left = 2*i + 1, right = 2*i + 2;
+        int m = (l+r)/2;
+        update(left, l, m, idx, val);
+        update(right, m+1, r, idx, val);
+        tree[i] = (tree[left] + tree[right]);
     }
 
-    data operation(data l , data r){
-        data new_(0) ;
+    int query(int i, int l, int r, int ql, int qr){
+        if(ql > r or qr < l) return 0;
+        if(ql <= l and qr >= r) return tree[i];
+        int left = 2*i + 1, right = 2*i + 2;
+        int m = (l+r)/2;
+        return query(left, l, m, ql, qr) + query(right, m+1, r, ql, qr);
+    }
 
-        new_.sum = l.sum + r.sum ;
-        new_.suff = max(r.suff, l.suff + r.sum) ;
-        new_.pref = max(l.pref , l.sum + r.pref) ;
-        new_.best =  max({l.best,r.best, r.pref + l.suff}) ;
 
-        return new_ ;
+    int operation(int l , int r) {
+        return l + r;
+        // data new_(0) ;
+
+        // new_.sum = l.sum + r.sum ;
+        // new_.suff = max(r.suff, l.suff + r.sum) ;
+        // new_.pref = max(l.pref , l.sum + r.pref) ;
+        // new_.best =  max({l.best,r.best, r.pref + l.suff}) ;
+
+        // return new_ ;
     }
 };
 
@@ -134,7 +138,7 @@ struct DSU {
         iota(all(data), 0);
         num = size;
     }
-    bool unite(int x, int y) {
+    bool merge(int x, int y) {
         x = root(x); y = root(y);
         if (x != y) {
             if (data[y] < data[x]) {
@@ -181,7 +185,37 @@ const ll n = 1e6+10;
 
 
 void solve(int __tc) {
-      
+    int n ;   
+    cin>> n;
+
+    vi arr(n);
+    iota(all(arr), 0);
+    rep(i,0,n) {
+        println(arr[i]);
+    }
+    ST st(n) ;
+    st.build(arr, 0, 0, n-1);
+    st.currbest();
+
+    int t = n;
+    while(t--) {
+        char c ;
+        cin>>c;
+        if(c == 'q') {
+            int l, r;
+            cin>>l >> r;
+
+            println(st.query(0, 0, n-1, l, r));
+            st.currbest();
+
+        } else {
+            println("-sdfsdf---");
+            int i, val;
+            cin>> i >> val;
+            st.update(0, 0, n-1, i, val);
+        }
+        println("----");
+    }
 }
 
 int main() {
