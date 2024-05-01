@@ -130,44 +130,48 @@ public :
     }
 };
 
+
 struct DSU {
-    vector<ll> data;
-    ll num;
-    DSU(ll size) {
-        data = vector<ll>(size, -1);
-        iota(all(data), 0);
+    int num;
+    vi par, rank;
+    DSU(int size) {
         num = size;
+        par = vi(size, -1);
+        rank = vi(size, 1);
+        iota(all(par), 0);
     }
-    bool merge(int x, int y) {
-        x = root(x); y = root(y);
-        if (x != y) {
-            if (data[y] < data[x]) {
-                swap(x, y);
-            }
-            data[x] += data[y]; data[y] = x;
-            num--;
+    int find(int x) {
+        return par[x] == x ? x : par[x] = find(par[x]);
+        if(par[x] == x) {
+            return x;
         }
-        return x != y;
+
+        par[x] = find(par[x]);
+        rank[x] = 1;
+        return par[x];
     }
-    bool find(int x, int y) {
-        return root(x) == root(y);
-    }
-    int root(int x) {
-        return data[x] == x ? x : data[x] = root(data[x]);
+    void merge(int x, int y) {
+        x = find(x); y = find(y);
+        if(x == y) {
+            return;
+        }
+        if(rank[x] < rank[y]) swap(x, y); // x is bigger
+        rank[x]+=rank[y];
+        par[y] = x;
     }
     ll size(int x) {
-        return -data[root(x)];
+        return rank[find(x)];
     }
     vector<vector<int>>groups(){
-        vector<vector<int>>ret(data.size());
-        for(int i=0;i<data.size();i++){
-            ret[root(i)].push_back(i);
+        vector<vector<int>>ret(par.size());
+        for(int i=0;i<par.size();i++){
+            ret[find(i)].push_back(i);
         }
         return ret;
     }
     void print() {
         auto tmp=groups();
-        for(int i=0;i<data.size();i++){
+        for(int i=0;i<par.size();i++){
             if(!tmp[i].empty()){
                 for(auto z:tmp[i]) {
                     cout<<z<<",";
@@ -185,37 +189,18 @@ const ll n = 1e6+10;
 
 
 void solve(int __tc) {
-    int n ;   
-    cin>> n;
+    int n;
+    cin >> n;
 
     vi arr(n);
-    iota(all(arr), 0);
-    rep(i,0,n) {
-        println(arr[i]);
+    for(auto &x : arr) {
+        cin >> x;
     }
-    ST st(n) ;
+
+    ST st(n);
     st.build(arr, 0, 0, n-1);
-    st.currbest();
 
-    int t = n;
-    while(t--) {
-        char c ;
-        cin>>c;
-        if(c == 'q') {
-            int l, r;
-            cin>>l >> r;
-
-            println(st.query(0, 0, n-1, l, r));
-            st.currbest();
-
-        } else {
-            println("-sdfsdf---");
-            int i, val;
-            cin>> i >> val;
-            st.update(0, 0, n-1, i, val);
-        }
-        println("----");
-    }
+    
 }
 
 int main() {
