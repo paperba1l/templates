@@ -20,7 +20,7 @@ typedef unsigned long long ull;
 #define prec(n)     fixed<<setprecision(n)
 #define ischar(ch)  (ch>='a' && ch<='z')
 #define isChar(ch)  (ch>='A' && ch<='Z')
-#define println(a)      cout<< a <<endl;
+#define println(a)      cout<<a<<endl;
 #define println2(a,b)   cout<<a<<" "<<b<<endl;
 #define println3(a,b,c) cout<<a<<" "<<b<<" "<<c<<endl;
 
@@ -37,10 +37,23 @@ vi month = {31,28,31,30,31,30,31,31,30,31,30,31};
 vvi dir4 = {{0,1},{1,0},{0,-1},{-1,0}}; 
 vvi dir8 = {{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}};
 vvi dirk = {{2,1},{1,2},{-1,2},{-2,1},{-2,-1},{-1,-2},{1,-2},{2,-1}};
-bool inGrid(int x, int y, int n, int m) {
+
+bool inMat(int x, int y, int n, int m) {
     return x >= 0 && x < n && y >= 0 && y < m;
 }
-//
+
+void sieve(vi &comp) {
+    int n = comp.size();    
+    for (int i = 2; i < n; i++) {
+        if (comp[i] == 0) {
+            for (int j = i * 2; j < n; j += i) {
+                comp[j] = 1;
+            }
+        }
+    }
+    return;
+}
+
 struct BIT {
     vector<ll> f;
     BIT(int n) : f(n) {}
@@ -62,7 +75,7 @@ struct BIT {
     }
 };
 
-class ST {
+struct ST {
     struct data{
         ll sum , pref , suff , best ;
         data(int _val){
@@ -70,9 +83,8 @@ class ST {
             pref = suff = best = max(0,_val) ;
         }
     };
+    
     vector<int> tree ;
-
-public :
     ST(int n = 1e5){
         tree.assign(n*4, 0); // change this default value
     }
@@ -91,7 +103,7 @@ public :
         int m = (l+r)/2;
         build(arr, left, l, m);
         build(arr, right, m+1, r);
-        tree[i] = (tree[left] + tree[right]);
+        tree[i] = operation(tree[left], tree[right]);
     }
 
     void update(int i, int l, int r, int idx, int val){
@@ -105,7 +117,7 @@ public :
         int m = (l+r)/2;
         update(left, l, m, idx, val);
         update(right, m+1, r, idx, val);
-        tree[i] = (tree[left] + tree[right]);
+        tree[i] = operation(tree[left], tree[right]);
     }
 
     int query(int i, int l, int r, int ql, int qr){
@@ -113,7 +125,9 @@ public :
         if(ql <= l and qr >= r) return tree[i];
         int left = 2*i + 1, right = 2*i + 2;
         int m = (l+r)/2;
-        return query(left, l, m, ql, qr) + query(right, m+1, r, ql, qr);
+        int resl = query(left, l, m, ql, qr);
+        int resr = query(right, m+1, r, ql, qr);
+        return operation(resl, resr);
     }
 
 
@@ -129,7 +143,6 @@ public :
         // return new_ ;
     }
 };
-
 
 struct DSU {
     int num;
@@ -185,23 +198,17 @@ struct DSU {
 
 
 
-const ll n = 1e6+10;
-
-
 void solve(int __tc) {
-    int n;
-    cin >> n;
+    // ST st(100);
 
-    vi arr(n);
-    for(auto &x : arr) {
-        cin >> x;
-    }
+    vi comp(1e5, 0);
+    sieve(comp);
 
-    ST st(n);
-    st.build(arr, 0, 0, n-1);
-
-    
+    println(comp[2]);
+    println(comp[3]);
+    println(comp[4]);
 }
+
 
 int main() {
     boostio;
@@ -214,3 +221,4 @@ int main() {
     }
     return 0;
 }
+
