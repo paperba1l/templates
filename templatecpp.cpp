@@ -20,9 +20,9 @@ typedef unsigned long long ull;
 #define prec(n)     fixed<<setprecision(n)
 #define ischar(ch)  (ch>='a' && ch<='z')
 #define isChar(ch)  (ch>='A' && ch<='Z')
-#define println(a)      cout<<a<<endl;
-#define println2(a,b)   cout<<a<<" "<<b<<endl;
-#define println3(a,b,c) cout<<a<<" "<<b<<" "<<c<<endl;
+#define println(a)      cout<<a<<'\n';
+#define println2(a,b)   cout<<a<<" "<<b<<'\n';
+#define println3(a,b,c) cout<<a<<" "<<b<<" "<<c<<'\n';
 
 #define boostio                       \
     ios_base::sync_with_stdio(false); \
@@ -83,10 +83,14 @@ struct ST {
             pref = suff = best = max(0,_val) ;
         }
     };
-    
+
     vector<int> tree ;
     ST(int n = 1e5){
         tree.assign(n*4, 0); // change this default value
+    }
+
+    void reset() {
+        ree.assign(n*4, 0);
     }
 
     void currbest(){
