@@ -85,12 +85,14 @@ struct ST {
     };
 
     vector<int> tree ;
+    int N;
     ST(int n = 1e5){
+        N = n;
         tree.assign(n*4, 0); // change this default value
     }
 
     void reset() {
-        ree.assign(n*4, 0);
+        tree.assign(N*4, 0);
     }
 
     void currbest(){
