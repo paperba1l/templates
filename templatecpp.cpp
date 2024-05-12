@@ -31,8 +31,6 @@ typedef unsigned long long ull;
 // constants
 const long double eps   = 1e-9;
 const long double pi    = 3.14159265358979;
-const string YES        = "YES";
-const string NO         = "NO";
 
 vi month = {31,28,31,30,31,30,31,31,30,31,30,31};
 vvi dir4 = {{0,1},{1,0},{0,-1},{-1,0}}; 
@@ -56,6 +54,7 @@ void sieve(vi &comp) {
     }
     return;
 }
+
 
 struct BIT {
     vector<ll> f;
@@ -204,18 +203,67 @@ struct DSU {
     }
 };
 
-
-
-
-void solve(int __tc) {
-    int n, k;
-    cin >> n >> k;
-
-    vi a(n);
-    rep(i, n) {
-        cin >> a[i];
+struct Trie {
+    vvi trie;
+    vi cnt;
+    int N, sz;
+    Trie(int n = 1e6) { 
+        N = n;
+        cnt = vi(n, 0);
+        trie = vvi(n, vi(26,0));
+        extend();
+    }
+    
+    void extend() {
+        for (int i = 0; i < 26; ++i) {
+            trie[sz][i] = 0;
+        }
+        cnt[sz] = 0, sz++;
     }
 
+    int next(int u, int v) {
+        if (!trie[u][v]) {
+            trie[u][v] = sz;
+            extend();
+        }
+        return trie[u][v];
+    }
+
+    void add(string s) {
+        int now = 0;
+        for (char c : s) {
+            now = next(now, c - 'a');
+            cnt[now]++;
+        }
+    }
+
+    void del(string s) {
+        int now = 0;
+        for (char c : s) {
+            now = next(now, c - 'a');
+        }
+        cnt[now]--;
+    }
+
+    void reset() { 
+        sz = 0, extend(); 
+    }
+};
+
+void solve(int __tc) {
+    int n;
+    cin >> n;
+
+
+    ll ans = 0;
+    rep(i, n) {
+
+    }
+
+    print1(ans);
+
+
+    
 }
 
 
