@@ -15,7 +15,7 @@ typedef unsigned long long ull;
 #define vvi         vector<vector<int>>
 #define vll         vector<ll>
 #define all(v)      (v).begin(),(v).end()
-#define rep(i,a,b)  for(int i=a;i<b;i++)
+#define rep(i,n)    for(int i=0;i<a;i++)
 #define mset(ar,x)  memset(ar,x,sizeof(ar));
 #define prec(n)     fixed<<setprecision(n)
 #define ischar(ch)  (ch>='a' && ch<='z')
@@ -31,12 +31,15 @@ typedef unsigned long long ull;
 // constants
 const long double eps   = 1e-9;
 const long double pi    = 3.14159265358979;
-const ll mod            = 1e9+7;
 
 vi month = {31,28,31,30,31,30,31,31,30,31,30,31};
 vvi dir4 = {{0,1},{1,0},{0,-1},{-1,0}}; 
 vvi dir8 = {{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}};
 vvi dirk = {{2,1},{1,2},{-1,2},{-2,1},{-2,-1},{-1,-2},{1,-2},{2,-1}};
+
+
+ll mod = 1e9+7;
+
 
 bool inMat(int x, int y, int n, int m) {
     return x >= 0 && x < n && y >= 0 && y < m;
@@ -205,14 +208,11 @@ struct DSU {
 
 
 void solve(int __tc) {
-    // ST st(100);
+    // mod = 1231;
+    int n , k;
+    cin >> n;
 
-    vi comp(1e5, 0);
-    sieve(comp);
-
-    println(comp[2]);
-    println(comp[3]);
-    println(comp[4]);
+    vi a(n);
 }
 
 
