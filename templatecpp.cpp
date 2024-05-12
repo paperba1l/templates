@@ -12,17 +12,17 @@ typedef unsigned long long ull;
 #define pii         pair<int,int>
 #define pll         pair<ll,ll>
 #define vi          vector<int>
-#define vvi         vector<vector<int>>
 #define vll         vector<ll>
+#define vvi         vector<vector<int>>
 #define all(v)      (v).begin(),(v).end()
-#define rep(i,n)    for(int i=0;i<a;i++)
-#define mset(ar,x)  memset(ar,x,sizeof(ar));
+#define rep(i,n)    for(int i=0;i<n;i++)
+#define mems(ar,x)  memset(ar,x,sizeof(ar));
 #define prec(n)     fixed<<setprecision(n)
 #define ischar(ch)  (ch>='a' && ch<='z')
 #define isChar(ch)  (ch>='A' && ch<='Z')
-#define println(a)      cout<<a<<'\n';
-#define println2(a,b)   cout<<a<<" "<<b<<'\n';
-#define println3(a,b,c) cout<<a<<" "<<b<<" "<<c<<'\n';
+#define print1(a)   cout<<a<<'\n';
+#define print2(a,b)   cout<<a<<" "<<b<<'\n';
+#define print3(a,b,c) cout<<a<<" "<<b<<" "<<c<<'\n';
 
 #define boostio                       \
     ios_base::sync_with_stdio(false); \
@@ -31,12 +31,13 @@ typedef unsigned long long ull;
 // constants
 const long double eps   = 1e-9;
 const long double pi    = 3.14159265358979;
+const string YES        = "YES";
+const string NO         = "NO";
 
 vi month = {31,28,31,30,31,30,31,31,30,31,30,31};
 vvi dir4 = {{0,1},{1,0},{0,-1},{-1,0}}; 
 vvi dir8 = {{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}};
 vvi dirk = {{2,1},{1,2},{-1,2},{-2,1},{-2,-1},{-1,-2},{1,-2},{2,-1}};
-
 
 ll mod = 1e9+7;
 
@@ -44,7 +45,6 @@ ll mod = 1e9+7;
 bool inMat(int x, int y, int n, int m) {
     return x >= 0 && x < n && y >= 0 && y < m;
 }
-
 void sieve(vi &comp) {
     int n = comp.size();    
     for (int i = 2; i < n; i++) {
@@ -79,7 +79,7 @@ struct BIT {
 };
 
 struct ST {
-    struct data{
+    struct data {
         ll sum , pref , suff , best ;
         data(int _val){
             sum = _val ;
@@ -89,7 +89,7 @@ struct ST {
 
     vector<int> tree ;
     int N;
-    ST(int n = 1e5){
+    ST(int n = 1e5) {
         N = n;
         tree.assign(n*4, 0); // change this default value
     }
@@ -98,11 +98,11 @@ struct ST {
         tree.assign(N*4, 0);
     }
 
-    void currbest(){
-        cout << tree[0] << endl ;
+    void print() {
+        print1(tree[0]);
     }
 
-    void build(vi &arr, int i, int l, int r){
+    void build(vi &arr, int i, int l, int r) {
         if(l == r){
             tree[i] = arr[l];
             // tree[i] = data(arr[l]);
@@ -115,7 +115,7 @@ struct ST {
         tree[i] = operation(tree[left], tree[right]);
     }
 
-    void update(int i, int l, int r, int idx, int val){
+    void update(int i, int l, int r, int idx, int val) {
         if(idx < l or idx > r)  return;
         if(l == r){
             // tree[i] = data(val) ;
@@ -129,7 +129,7 @@ struct ST {
         tree[i] = operation(tree[left], tree[right]);
     }
 
-    int query(int i, int l, int r, int ql, int qr){
+    int query(int i, int l, int r, int ql, int qr) {
         if(ql > r or qr < l) return 0;
         if(ql <= l and qr >= r) return tree[i];
         int left = 2*i + 1, right = 2*i + 2;
@@ -184,7 +184,7 @@ struct DSU {
     ll size(int x) {
         return rank[find(x)];
     }
-    vector<vector<int>>groups(){
+    vector<vector<int>> groups(){
         vector<vector<int>>ret(par.size());
         for(int i=0;i<par.size();i++){
             ret[find(i)].push_back(i);
@@ -196,9 +196,9 @@ struct DSU {
         for(int i=0;i<par.size();i++){
             if(!tmp[i].empty()){
                 for(auto z:tmp[i]) {
-                    cout<<z<<",";
+                    print2(z, ',');
                 }
-                cout<<endl;
+                print1(endl);
             }
         }
     }
@@ -208,18 +208,21 @@ struct DSU {
 
 
 void solve(int __tc) {
-    // mod = 1231;
-    int n , k;
-    cin >> n;
+    int n, k;
+    cin >> n >> k;
 
     vi a(n);
+    rep(i, n) {
+        cin >> a[i];
+    }
+
 }
 
 
 int main() {
     boostio;
-
     int t = 1;
+    
     // cin>>t;
 
     while (t--) {
