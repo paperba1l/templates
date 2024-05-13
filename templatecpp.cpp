@@ -36,7 +36,6 @@ const vvi dir4 = {{0,1},{1,0},{0,-1},{-1,0}};
 const vvi dir8 = {{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}};
 const vvi dirk = {{2,1},{1,2},{-1,2},{-2,1},{-2,-1},{-1,-2},{1,-2},{2,-1}};
 
-
 // MOD
 ll mod = 1e9+7;
 
@@ -59,7 +58,7 @@ void sieve(vi &comp) {
 struct BIT {
     vector<ll> f;
     BIT(int n) : f(n) {}
-    void insert(int loc, int val) {
+    void insert(int loc, ll val) {
         if (loc == 0) {
             f[loc] += val;
         } else {
@@ -86,61 +85,8 @@ struct ST {
         }
     };
 
-    vector<int> tree ;
-    int N;
-    ST(int n = 1e5) {
-        N = n;
-        tree.assign(n*4, 0); // change this default value
-    }
-
-    void reset() {
-        tree.assign(N*4, 0);
-    }
-
-    void print() {
-        print1(tree[0]);
-    }
-
-    void build(vi &arr, int i, int l, int r) {
-        if(l == r){
-            tree[i] = arr[l];
-            // tree[i] = data(arr[l]);
-            return;
-        }
-        int left = 2*i + 1, right = 2*i + 2;
-        int m = (l+r)/2;
-        build(arr, left, l, m);
-        build(arr, right, m+1, r);
-        tree[i] = operation(tree[left], tree[right]);
-    }
-
-    void update(int i, int l, int r, int idx, int val) {
-        if(idx < l or idx > r)  return;
-        if(l == r){
-            // tree[i] = data(val) ;
-            tree[i] = val;
-            return;
-        }
-        int left = 2*i + 1, right = 2*i + 2;
-        int m = (l+r)/2;
-        update(left, l, m, idx, val);
-        update(right, m+1, r, idx, val);
-        tree[i] = operation(tree[left], tree[right]);
-    }
-
-    int query(int i, int l, int r, int ql, int qr) {
-        if(ql > r or qr < l) return 0;
-        if(ql <= l and qr >= r) return tree[i];
-        int left = 2*i + 1, right = 2*i + 2;
-        int m = (l+r)/2;
-        int resl = query(left, l, m, ql, qr);
-        int resr = query(right, m+1, r, ql, qr);
-        return operation(resl, resr);
-    }
-
-
-    int operation(int l , int r) {
-        return l + r;
+    ll operation(ll l , ll r) {
+        return max(l,r);
         // data new_(0) ;
 
         // new_.sum = l.sum + r.sum ;
@@ -149,6 +95,75 @@ struct ST {
         // new_.best =  max({l.best,r.best, r.pref + l.suff}) ;
 
         // return new_ ;
+    }
+
+    int N;
+    vector<ll> tree ;
+    ST(int n = 1e5) {
+        N = n;
+        tree.assign(n*4, -1e18); // change this default value
+    }
+    void reset() {
+        tree.assign(N*4, 0);
+    }
+    void print() {
+        print1(tree[0]);
+    }
+
+    void buildFromArr(vi &arr, int i, int l, int r) {
+        if(l == r) {
+            tree[i] = arr[l]; // array value
+            // tree[i] = data(arr[l]);
+            return;
+        }
+        int left = (i<<1)+1, right = (i<<1)+2;
+        int m = (l+r)/2;
+        buildFromArr(arr, left, l, m);
+        buildFromArr(arr, right, m+1, r);
+        tree[i] = operation(tree[left], tree[right]);
+    }
+
+    void buildDefault(int i, int l, int r) {
+        if(l == r) {
+            tree[i] = 0; // default value
+            return;
+        }
+        int left = (i<<1)+1, right = (i<<1)+2;
+        int m = (l+r)/2;
+        buildDefault(left, l, m);
+        buildDefault(right, m+1, r);
+        tree[i] = operation(tree[left], tree[right]);
+    }
+
+    void __update(int i, int l, int r, int idx, ll val) {
+        if(idx < l or idx > r) return;
+        if(l == r) {
+            // tree[i] = data(val) ;
+            tree[i] = operation(tree[i], val); return;
+        }
+        int left = (i<<1)+1, right = (i<<1)+2;
+        int m = (l+r)/2;
+        __update(left, l, m, idx, val);
+        __update(right, m+1, r, idx, val);
+        tree[i] = operation(tree[left], tree[right]);
+        
+    }
+    void update(int idx, ll val) {
+        __update(0, 0, N-1, idx, val);
+    }
+
+    ll __query(int i, int l, int r, int ql, int qr) {
+        if(ql > r or qr < l) return -1e18;
+        if(ql <= l and qr >= r) return tree[i];
+        int left = 2*i+1, right = 2*i+2;
+        int m = (l+r)/2;
+        return operation(
+             __query(left, l, m, ql, qr),
+             __query(right, m+1, r, ql, qr)
+        );
+    }
+    ll query(int ql, int qr) {
+        return __query(0, 0, N-1, ql, qr);
     }
 };
 
