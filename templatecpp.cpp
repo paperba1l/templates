@@ -32,9 +32,9 @@ typedef unsigned long long ull;
 const long double eps   = 1e-9;
 const long double pi    = 3.14159265358979;
 const vi month = {31,28,31,30,31,30,31,31,30,31,30,31};
-const vvi dir4 = {{0,1},{1,0},{0,-1},{-1,0}}; 
-const vvi dir8 = {{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}};
-const vvi dirk = {{2,1},{1,2},{-1,2},{-2,1},{-2,-1},{-1,-2},{1,-2},{2,-1}};
+const vector<array<int,2>> dir4 = {{0,1},{1,0},{0,-1},{-1,0}}; 
+const vector<array<int,2>> dir8 = {{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}};
+const vector<array<int,2>> dirk = {{2,1},{1,2},{-1,2},{-2,1},{-2,-1},{-1,-2},{1,-2},{2,-1}};
 
 // MOD
 ll mod = 1e9+7;
@@ -58,18 +58,18 @@ void sieve(vi &comp) {
 struct BIT {
     vector<ll> f;
     BIT(int n) : f(n) {}
-    void insert(int loc, ll val) {
-        if (loc == 0) {
-            f[loc] += val;
+    void update(int idx, ll val) {
+        if (idx == 0) {
+            f[idx] += val;
         } else {
-            for (int i = loc; i < (int)f.size(); i += i & -i) {
+            for (int i = idx; i < (int)f.size(); i += i & -i) {
                 f[i] += val;
             }
         }
     }
-    ll query(int loc) {
+    ll query(int idx) {
         ll res = f[0];
-        for (int i = loc; i; i -= i & -i) {
+        for (int i = idx; i; i -= i & -i) {
             res += f[i];
         }
         return res;
@@ -86,7 +86,7 @@ struct ST {
     };
 
     ll operation(ll l , ll r) {
-        return max(l,r);
+        return (l+r);
         // data new_(0) ;
 
         // new_.sum = l.sum + r.sum ;
@@ -101,7 +101,7 @@ struct ST {
     vector<ll> tree ;
     ST(int n = 1e5) {
         N = n;
-        tree.assign(n*4, -1e18); // change this default value
+        tree.assign(n*4,0); // change this default value
     }
     void reset() {
         tree.assign(N*4, 0);
@@ -149,11 +149,11 @@ struct ST {
         
     }
     void update(int idx, ll val) {
-        __update(0, 0, N-1, idx, val);
+        return __update(0, 0, N-1, idx, val);
     }
 
     ll __query(int i, int l, int r, int ql, int qr) {
-        if(ql > r or qr < l) return -1e18;
+        if(ql > r or qr < l) return 0;
         if(ql <= l and qr >= r) return tree[i];
         int left = 2*i+1, right = 2*i+2;
         int m = (l+r)/2;
@@ -270,17 +270,17 @@ void solve(int __tc) {
     cin >> n;
 
 
-    ll ans = 0;
     rep(i, n) {
 
     }
+
+    ll ans = 0;
 
     print1(ans);
 
 
     
 }
-
 
 int main() {
     boostio;
