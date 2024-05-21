@@ -39,20 +39,6 @@ const vector<array<int,2>> dirk = {{2,1},{1,2},{-1,2},{-2,1},{-2,-1},{-1,-2},{1,
 // MOD
 ll mod = 1e9+7;
 
-bool inMat(int x, int y, int n, int m) {
-    return x >= 0 && x < n && y >= 0 && y < m;
-}
-void sieve(vi &comp) {
-    int n = comp.size();    
-    for (int i = 2; i < n; i++) {
-        if (comp[i] == 0) {
-            for (int j = i * 2; j < n; j += i) {
-                comp[j] = 1;
-            }
-        }
-    }
-    return;
-}
 
 
 struct BIT {
@@ -265,25 +251,51 @@ struct Trie {
     }
 };
 
-void solve(int __tc) {
-    int n;
-    cin >> n;
-
-
-    rep(i, n) {
-
+bool inMat(int x, int y, int n, int m) {
+    return x >= 0 && x < n && y >= 0 && y < m;
+}
+void sieve(vi &comp) {
+    int n = comp.size();    
+    for (int i = 2; i < n; i++) {
+        if (comp[i] == 0) {
+            for (int j = i * 2; j < n; j += i) {
+                comp[j] = 1;
+            }
+        }
     }
+    return;
+}
 
-    ll ans = 0;
+vi zfunc (string s) {
+    int n = (int) s.length(); vi z(n, 0);
+    for (int i=1, l=0, r=0; i<n; ++i) {
+        if (i <= r) { z[i] = min(r-i+1, z[i-l]);}
+        while (i+z[i] < n && s[z[i]] == s[i+z[i]]) ++z[i];
+        if (i+z[i]-1 > r) { l = i, r = i+z[i]-1;}
+    }
+    return z;
+}
 
+
+void solve(int __tc) {
+    
+
+    ll  ans;
     print1(ans);
 
 
     
 }
 
+
 int main() {
     boostio;
+
+    #ifndef ONLINE_JUDGE
+    freopen("INPUT.txt", "r", stdin);
+    freopen("OUTPUT.txt", "w", stdout);
+    #endif
+
     int t = 1;
     
     // cin>>t;
