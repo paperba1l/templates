@@ -30,14 +30,14 @@ typedef unsigned long long ull;
 
 // constants
 const long double eps   = 1e-9;
-const long double pi    = 3.14159265358979;
+const long double PI    = 3.14159265358979;
 const vi month = {31,28,31,30,31,30,31,31,30,31,30,31};
 const vector<array<int,2>> dir4 = {{0,1},{1,0},{0,-1},{-1,0}}; 
 const vector<array<int,2>> dir8 = {{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}};
 const vector<array<int,2>> dirk = {{2,1},{1,2},{-1,2},{-2,1},{-2,-1},{-1,-2},{1,-2},{2,-1}};
 
 // MOD
-ll mod = 1e9+7;
+ll MOD = 1e9+7;
 
 
 
@@ -96,7 +96,7 @@ struct ST {
         print1(tree[0]);
     }
 
-    void buildFromArr(vi &arr, int i, int l, int r) {
+    void buildFromArr(int i, int l, int r, vi &arr) {
         if(l == r) {
             tree[i] = arr[l]; // array value
             // tree[i] = data(arr[l]);
@@ -104,8 +104,8 @@ struct ST {
         }
         int left = (i<<1)+1, right = (i<<1)+2;
         int m = (l+r)/2;
-        buildFromArr(arr, left, l, m);
-        buildFromArr(arr, right, m+1, r);
+        buildFromArr(left, l, m, arr);
+        buildFromArr(right, m+1, r, arr);
         tree[i] = operation(tree[left], tree[right]);
     }
 
@@ -186,14 +186,14 @@ struct DSU {
     }
     vector<vector<int>> groups(){
         vector<vector<int>>ret(par.size());
-        for(int i=0;i<par.size();i++){
+        for(int i=0;i<(int)par.size();i++){
             ret[find(i)].push_back(i);
         }
         return ret;
     }
     void print() {
         auto tmp=groups();
-        for(int i=0;i<par.size();i++){
+        for(int i=0;i<(int)par.size();i++){
             if(!tmp[i].empty()){
                 for(auto z:tmp[i]) {
                     print2(z, ',');
